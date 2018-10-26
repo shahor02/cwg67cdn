@@ -1,0 +1,87 @@
+\subsection{EMCal Calibration}
+
+\subsubsection{EMCal $\pi^{0}$ calibration}
+The energy calibration relies during data taking on the measurement of the $\pi^{0}$ mass position per cell. Each tower has a calibration coefficient. In what follows, a calibration parameter is equal to the result of the fitted mass over the PDG mass value, where the fitted mass denotes the mass given by a gaussian fit on the $\pi^{0}$ invariant mass peak distribution in a given tower (plus a combinatorial background, fitted by a 2nd degree polynomial).
+About 100-200 M events EMCAL (L0) triggered (trigger threshold at 1.5-2 GeV) allow to calibrate a majority of the towers ({\bf the statistic might change with the increase of colliding energy but of the same order}). The towers located at the borders of the super-modules and those  behind the support frame (about 5 columns per SM) have much fewer statistics and would need a minimum of 150 Mevts (probably more). It is to be noted that the run-to-run temperature variations change the towers' response in a non-uniform way, i.e. the width of the $\pi^{0}$ peak increases, and the mean $\pi^{0}$ mass is shifted differently for the various towers. Also the $\pi^{0}$ mass shifts to lower values for the towers with material in front, due to photo-conversion close to the EMCAL surface.
+
+A few iterations on the data, 3 to 5, obtaining in each iteration improved calibration coefficients, are needed to achieve a good accuracy (1-2\%). Since the online calibration has a strong effect on the trigger efficiency, the voltage gains of the APDs are varied after each running period, to get a uniform trigger performance. 
+
+This calibration, since it needs a large amount of statistic, will run after the data is reconstructed and it will run like an analysis task. The calibration factors obtained will be applied at the analysis level.
+
+\paragraph*{$\pi^{0}$ Calibration Procedure\\}
+
+Since $\pi^{0}$s decay into 2 gammas, their invariant mass is calculated from the energy of 2 clusters (and angle between the clusters). The position of the invariant mass peak of a tower therefore doesn't depend only on its response and calibration coefficient, but also on an average of the responses and calibration coefficients of all the other towers of the SM, weighted by  how often they appear in combination with a cluster in the considered tower. The 2nd effect, of weaker magnitude maybe, originates from the fact that a cluster most often covers more than the considered tower. To simplify the calibration process, the calibration coefficient is calculated as if the whole energy of the cluster was contained in the tower of the cluster which has the largest signal. So the position of the invariant mass peak of a tower also depends on an average of the responses and calib coeffs of its neighbouring towers. For these reasons, the calibration of the calorimeter with the  $\pi^{0}$ is an iterative procedure :
+\begin{itemize}
+\item Run the analysis code on this data to produce the analysis histograms per tower and a 1st version of the calib coeffs.
+\item Look at the fits on the towers invariant mass histograms and discard the value (or set it by hand) of the calib coeff of the towers for which the fit can't be trusted.
+\item Create a 1st set of OCDB coeffs.
+\item Reconstruct the $\pi^{0}$'s with these OCDB coeffs.
+\item Run the analysis code on this data to produce the analysis histograms and a 2nd version of the calib coeffs.
+\item Look at the fits on the towers invariant mass histograms and discard the value (or set it by hand) of the calib coeff of the towers for which the fit can't be trusted.
+\item Create a 2nd set of OCDB coeffs.
+\item Etc..., until the invariant mass is satisfactory in all the towers, i.e., the calibration factor does not change in the next iteration more and 1\%.
+\end{itemize}
+When the statistics is enough, 4 iterations should be enough to finalize the calibration (in practice, more are needed, due to outliers or studies that are needed).
+\bf{Note that this analysis is fast, the only slowing factor is the analysis on the grid}. {We can aim to have the first iteration of the histograms produced by the online reconstruction, but this will only improve one of the steps and to have a good first iteration we need to remove the bad channels first and their finding will not happen likely during reconstruction. }
+
+\subsubsection{Run by run temperature gain variations}
+
+The super-modules calibration depends on the temperature dependence of the different towers gains. We observe that from one period to other, where the T changes, the $\pi^{0}$ peak positions also changes. There are 2 ways to correct for this effect : either measure the mean Temperature per run, and get the gain curves per tower a calculate the corresponding correction; or use the calibration LED events to quantify the variation from one reference run. Each of those 2 procedures have problems, poor or lack of knowledge of the gain curves of some towers or bad performance of the LED system in certain regions. Our aim is to include this in the online reconstruction if we finally consider to have a reliable procedure.
+These temperature or time-dependent corrections are still under study: for further, and up-to-date, information, please see the wiki: 
+https://twiki.cern.ch/twiki/bin/viewauth/ALICE/EMCalTimeDependentCalibrations
+
+
+\subsubsection{Time calibration  }
+
+The time of the amplitude measured by a given cell is a good candidate to reject noisy towers, identify pile up events when coming from different Bunch Crossing, or even identify heavy hadrons at low energy. The average time is around 580 ns. The aim of the time calibration is to do a relative calibration between cells to align all cells to a mean value of 0 ns, with as small spread as possible (negative values are unavoidable for the moment). The time calibration coefficient for each cell is the result of the average time of the cell when belonging to a cluster with enough energy (>1GeV). 
+The calibration coefficient have to be subtracted to the cell time. Like for the $\pi^{0}$  energy calibration, the amount of statistic needed to have a reliable time calibration factor per tower is large, 100M EMCal triggered events and cannot be done online but at the analysis time and like there, once the the correction factor is set, it can be applied directly at the analysis.
+
+\paragraph*{Time Calibration Procedure\\}
+
+Since the some variations of mean time have been observed depending on the bunch cross numbers (BC) $\%$ 4 the computation of the time coefficients is done for each bunch cross numbers BC$\%$ 4 scheme.
+
+The time calibration coefficient computing is done in 2 iterations. 
+\begin{itemize}
+\item 1$^{rst}$  iteration:\\
+Get Bunch Cross Number for the event.
+Loop on all cluster of the event. \\ Loop on all cells in the cluster.
+If cell amplitude is > 0.9 GeV and 500 ns < cell time < 700 ns then 
+compute average per cell per BC$\%$4 and fill in 1D histogam with calibration coefficients: hAveragesBC$x$ where $x$ stands for the result of BC$\%$4.
+\item 2$^{nd}$iteration:\\
+Get Bunch Cross Number for the event.\\ 
+Loop on all cluster of the event. \\ Loop on all cells in the cluster.\\ 
+Get Calibration coefficient for BC$\%$4 from  hAveragesBC$x$.  If cell amplitude is > 0.9 GeV and -20ns < (cell time-cell Calibration Coefficient)  < 20ns.\\
+Compute average time per cell per BC$\%$4 and fill in 1D histogam with those new calibration coefficients: hAllAveragesBC$x$.
+\end{itemize}
+
+\subsubsection{Bad channel finding}
+
+The analysis is done on the output of some histograms with distribution of amplitudes (energy) of cells versus cell Absolute ID number (AbsId). The idea is to check distributions over the cells of different observables extracted from this histograms. Then each cell is tested regarding to the distribution over all the cells for each observable. The different tests are the following:
+
+\begin{enumerate}
+\item average energy (average computed for Emin< E  <Emax) 
+\item average number of hit per event  (average computed for Emin< E  <Emax)
+\item Shape criteria : A fit of the cell energy (amplitude) distribution is performed with the function:$A*e^{-B*x}/x^2$ between Emin and Emax.  Then the  $\chi^{2}/ndf$, A  and B which are parameters from the fit of each cell amplitude. 
+\end{enumerate}
+
+Each criteria is tested at least once (they can be tested also for different energy i nterval). At the end of each test the marked cells are excluded (if above nsigma from mean value, usually nsigma is taken equal 4 or 5) before computing the next distribution. 
+
+The typical nsigma used is 4 or 5.
+The min energy considered is 0.1 GeV/0.3 GeV.  And the maximum energy depends on the data (minbias or triggered data). 
+
+
+There are different levels of classification for  cells wich will enter the deadMap:
+\begin{itemize}
+\item kAlive = 0: cell is OK
+\item kDead = 1: cell is dead 
+\item kHot = 2: cell is bad
+\item kWarning=3: cell may have problems (warm or miscalibrated)
+\end{itemize}
+
+The distinction of the bad/warm status is done by visual check of the energy distribution of the cells detected by the different tests described above.
+
+In the reconstruction pass the only the cells marked as kHot and kDead are not reconstructed. 
+For the selection of bad towers, a run or a sample of runs with large statistic can be used, knowing that bad channels can appear from run to run. This procedure can be implemented online, but in any case the output cannot be used at the reconstruction time.
+
+
+

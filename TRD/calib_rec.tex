@@ -1,0 +1,59 @@
+\subsection{TRD calibration and reconstruction}
+\label{TRD:FLP}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Reconstruction}
+
+The TRD reconstruction will have to follow different schemas,
+depending on which type of readout is employed.  
+
+In the case of the full raw ADC data readout or the partial data
+readout, the it will follow essentially the same sequence as has been
+used up to now.  It starts with cluster finding based on the raw data
+for all read time bins, followed by the offline tracklet finding
+(layer-by-layer).  This tracklet information is then the basis of the
+global track finding using the Kalman filter.  For Run-3 the first two
+steps (cluster and tracklet finding) might be run of the FLP, while
+the track finding will be part of the EPN stage.
+
+If the readout mode is changed to the tracklet mode, the
+reconstruction is foreseen to be based on the online tracklet
+information only.  First studies indicate that this is feasible
+without severe loss in PID performance.  Since this mode does not
+require any offline cluster and tracklet finding, the FLP stage would
+only be needed for post-processing the online tracklets (e.g. quality
+selection, marking of pad row crossings, etc.).  The data rate between
+FLP and EPN would therefore be only slightly lower than the input rate
+to FLP in this case.  Since this reconstruction mode needs a reliable
+extrapolation from other detectors (TPC), a very good alignment is
+mandatory.
+
+Running the TRD in a mixed mode would have the consequence that the
+reconstruction should be able to apply both scenarios sketched above
+to these events, since they contain full zero-suppressed ADC data as
+well as the tracklet information.
+
+In order to improve the TPC calibration procedure, the TRD can be used
+to provide a first estimate on possible track candidates.  This will
+require the implementation of a TRD track finding in a quasi
+stand-alone mode, that will need to be developed in detail still.
+
+%-----------------------------------------------------------------------------
+\subsubsection{Calibration}
+
+Currently, the TRD calibration procedure is implemented for the
+following quantities: gain factors, drift velocity $v_{d}$,
+ExB-effect, time offset $t_{0}$, and chamber status.  These procedures
+could be used in the same way on the EPN for the full and partial
+readout modes.  Especially, the fraction of events fully read out in
+the mixed mode could be calibrated according to the established
+procedures and should provide sufficient statistics for an accurate
+calibration.
+
+In the tracklet readout mode, a tail cancellation of the input data
+and a gain calibration can be performed (possibly on FLPs) based on
+the charge information included in the online tracklets.  However, a
+calibration of other parameters ($t_{0}$ and $v_{d}$) is not directly
+possible, but might be replaced by a global alignment procedure.
+
+

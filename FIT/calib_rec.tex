@@ -1,0 +1,39 @@
+\subsection{FIT calibration and reconstruction}
+\label{FIT:FLP}
+
+FIT calibration consist of 3 procedures:
+\begin{itemize}
+\item Slewing correction – required typically once per year; it is done either with the aid of the laser calibration 
+system or/and with the physics data collected during the 1st day of data taking
+\item Channel equalization – it is normally based on the first 20000 events; equalization can be done on FLP once a week
+\item Global offsets – required to place T0A and T0C around zero. Calibration of these offsets is time-dependent 
+and need information about full event. It can be performed on the FLP provided that the whole detector is processed
+by the single FLP, otherwise, should be performed on the EPN.
+\end{itemize}
+
+The main purpose of reconstruction of the FIT data is to improve the precision of the
+trigger parameters that are generated and available already online:
+\begin{itemize}
+\item Interaction time: calculated in FE as the average of the arrival time of the 1st signal generated on the 
+A and C sides: (T0A+T0C)/2. Parameter equalization for trigger generation must be hardwired and therefore 
+it’s accuracy is limited 
+by the step size of the delay boxes and stability of the electronic units. 
+During the reconstruction the delays can be equalized to higher precision and the interaction 
+time can be extracted not just from the first signals but from the average arrival time on each side
+(high precision interaction time is needed for particle identification using the TOF method).
+
+\item The vertex position: defined as (T0A-T0C)/2. For trigger generation T0A and T0C are just the first 
+signals on each side and instead of the numerical value only a binary value is given indicating the 
+location of the interaction point either inside or outside of the predefined region. 
+Reconstruction is needed to obtain the numerical value of the vertex position. 
+
+\item The online multiplicity is only rudimentary and is accomplished with two pre-fixed comparator values 
+indicating reaching the semi-central and central collision thresholds. 
+During the reconstruction the sum of the amplitudes on each MCP sector can be extracted with a good 
+precision giving not only the total value but also the pseudo rapidity distribution and the 
+indication of the reaction plane. 
+\end{itemize}
+
+The reconstruction of the FIT takes negligible time and can be performed on the FLP (provided that both sides are
+processed by the same FLP).
+

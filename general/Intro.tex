@@ -1,0 +1,36 @@
+The reconstruction and calibration can be loosely split in two phases:
+
+\begin{itemize}
+
+\item Online: performed during the data taking on the data received from the
+upstream components of the processing chain or short time buffers.
+While the primary aim of these operations is to achieve a data
+compression level acceptable for the permanent storage at \TBD{$\sim$12.4
+GB/s in average and $\sim$75 GB/s peak rate}~\cite{panelDoc}, they
+should also
+facilitate as much as possible further processing of data to analysis
+grade level. 
+The calibrations performed at this phase should minimize
+the loss of the useful data during the lossy compression steps and
+preferably allow later reconstruction for physics analysis without
+special calibration passes.
+
+\item Offline: decoupled from the data taking process, using as an input the
+data from the permanent storage. Its aim is to provide analysis grade
+level for the full detector, analyzable in terms of separate
+collisions.
+\end{itemize}
+
+The online reconstruction and calibration proceed in two phases on:
+
+\begin{itemize}
+\item First Level Processors (FLP), receiving raw data from the
+Detector Data Links (DDL). Each FLP sees all data (e.g. all
+time-slices, without omissions)
+from only the part of detector it services. The data from FLP's are 
+aggregated and split into pieces containing information from all detectors for
+predefined time-frames (\TF).
+\item Event Processing Nodes (EPN), which process \TF's
+  asynchronously.
+\end{itemize}
+

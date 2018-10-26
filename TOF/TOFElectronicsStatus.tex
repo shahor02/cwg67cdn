@@ -1,0 +1,21 @@
+\subsection{TOF Electronics Status}
+\label{sec:TOFElectronicsStatus}
+During PHYSICS runs, the TOF data will be checked to spot inconsistent data format, unexpected missing information, 
+and errors flags raised by the electronics during the standard data decoding. This will allow to discard suspicious or not 
+fully efficient parts of the detector's readout from data reconstruction. 
+
+The information is going to signal which electronics channels were
+actually enabled and properly functioning. Discarding the data from the malfunctioning channels will allow for 
+further data reduction in addition to the one described in~\ref{sec:TOFDataReduction},
+in charge of removing the header and control words of the parts of the detectors not containing any hit. 
+
+The information will be stored as counters per channel locally on the FLPs while processing the data of one run. 
+The run integrated information (channel efficiency) will be aggregated on all the FLPs and written on an OCDB-like 
+storage at the end of the run to be used for Monte Carlo simulations. 
+It will be an objects of $\sim 3$ kB per run.
+%1 word (32 bits = 4 Byte) per TRM to track single TDCs; 38 TRM per SM; 18 SM --> 4 * 38 * 18 = 2.7 kByte 
+% the info will be ON/OFF, using a threshold 
+
+The processing time per event will be estimate using the already existing software implemented as DAQ DA and used 
+during Run1.
+

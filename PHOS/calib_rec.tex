@@ -1,0 +1,64 @@
+\subsection{PHOS calibration and reconstruction}
+\label{PHOS:FLP}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Reconstruction}
+
+The ultimate goal of PHOS raw data reconstruction needed for further
+physics analysis is producing reconstructed showers developed by
+particles in the PHOS medium, with each cluster characterized by its
+energy, coordinate, time and shower shape parameters. In general, PHOS
+raw data reconstruction consists of two steps:
+%
+\begin{enumerate}
+  \item Reconstruction of the amplitude and time of cells from the
+    sampled digitized signal. It leads to a significant reduction of
+    data volume, as from an array of up to 30 10-bit samples, only two
+    floating-point parameters are derived, cell energy $E$ and time
+    stamp $t$. In addition, a signal shape quality parameter can be
+    derived from the fitting procedure which can be further used to
+    assess the signal quality.
+  \item Reconstruction of clusters of adjacent cells in PHOS. Each
+    cluster, representing the shower developed by a particle
+    interacting with the PHOS medium, is characretized by the
+    reconstructed cluster energy, time with respect to the L0 trigger
+    instance, cluster coordinate calculated from the cluster gravity
+    center, and cluster shape parameters used later in analysis for
+    photon identification.
+\end{enumerate}
+%
+Further physics analysis operates with clusters which are used to
+evaluate the 4-momenta of reconstructed photons and to calculate
+identification probabilities to be a photon shower of clusters
+produced by other type of particles.
+
+Among possible implementation of on-line reconstruction procedures at
+the FLP level, one can consider reconstruction of cell energy and time
+from the sampled digitized data. It might be necessary to
+significantly reduce the data payload produced by the PHOS detector to
+the whole raw data stream. Estimated reduction of event size by this
+signal shape reconstruction compared to full sampled raw data is a
+factor of 10. This signal shape reconstruction can be potentially
+implemented either at the FPGA of the PHOS front-end electronics, or
+in HLT. Prototypes of HLT reconstruction are available in
+\verb|aliroot| since Run-1.
+
+Reconstruction of cluster from cells is not considered as an option
+for physics analysis. Having cells in reconstructed data is necessary
+for further offline calibration, also needed for tuning cluster fining
+algorithms, for reconstruction efficiency calculation via embedding,
+i.e. via merging simulated signals with real raw data. Cluster finding
+cannot work in FLP, as cluster fining requires access to cells which
+might be detected in different detector partitions.
+
+%-----------------------------------------------------------------------------
+\subsubsection{Calibration}
+
+PHOS energy and timing calibration requires very large statistics
+which cannot be accumulated in one physics run. Calibration is based
+on physics observables such as $\pi^0$ peaks on invariant mass
+spectra, average deposited energy in cells or time of cluster of
+particles from the interaction point to PHOS. Although calibration
+algorithms themselves are not feasible in on-line, filling and
+accumulating histograms during data taking and storing them at an
+external data storage might help in further offline calibration. 

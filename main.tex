@@ -1,0 +1,157 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+\usepackage{amsfonts}
+\usepackage{alicecwg}
+\usepackage{array}
+\usepackage{color}
+\usepackage{lineno}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{multirow}
+\usepackage{hyperref,url}
+
+\alicecwg{6+7}
+\version{1}
+\title{Conceptual design note for calibration and reconstruction}
+
+\author{
+  <+author+>$^a$ \and <+author+>$^a$ \and <+author+>$^b$
+}
+\institutes{
+  \normalsize{\it $^a$ <+Institute 1+>}\\
+  \normalsize{\it $^b$ <+Institute 2+>}
+}
+
+\date{\today}
+
+\input{definitions}
+
+\begin{document}
+\maketitle
+
+\linenumbers
+
+\begin{abstract}
+This note defines the goals of the calibration and reconstruction in
+ALICE \oo project and outlines the procedures need to achieve these goals.
+We summarize the current understanding of data rates from detectors on
+different stages of processing...
+\end{abstract}
+\newpage
+
+\begin{changelog}
+  \change{1}{08/12/13}{
+    initial version on alice-o2-cwg7/doc/cwg67cdn
+    git clone https://git.cern.ch/reps/alice-o2-cwg7
+  }
+\end{changelog}
+
+\tableofcontents
+
+\newpage
+
+%-------------------------------------------------------
+\section{Introduction}
+\input{general/Intro}
+
+%-------------------------------------------------------
+\section{Reconstruction and calibration flow}
+\input{general/RecCalibFlow}
+
+%-------------------------------------------------------
+\section{Handling of continuous readout}
+
+\TBD{
+Describe how the processing of data from detectors with continuous
+readout is done.
+\begin{itemize}
+\item ITS: treatment of collisions split between two read-out cycles
+\item TPC: reconstruction with seeds corresponding to specific \Tz
+  (from FIT) vs simultaneous reconstruction of multiple \Tz's (from
+  FIT or in standalone mode)
+\item ...
+\end{itemize}
+}
+
+%-------------------------------------------------------
+\section{Data rates and constraints}
+
+\TBD{This section summarized current estimates on raw data rates normalized
+to \pbpb 50 kHz interaction rates.}
+\TBD{Give min/max limits for those detectors whose rate is still uncertain.}
+
+\input{general/DataRatesSummary}
+
+\input{TRD/DataRate}
+\input{ITS/DataRate}
+\input{ZDC/DataRate}
+\input{PHOS/DataRate}
+\input{MUON/DataRate}
+\input{MFT/DataRate}
+\input{HMPID/DataRate}
+
+%-------------------------------------------------------
+\section{Calibration, reconstruction and data reduction on FLP's}
+\TBD{This section describes for each detector 
+\begin{itemize}
+\item What is done on the FLP, description of algorithms (if any)
+\item Estimates on the processing rate
+\item Estimates on the data rate sent to EPN's
+\end{itemize}
+}
+
+\input{TRD/calib_rec}
+\input{ITS/clusterization}
+\input{ZDC/calib_rec}
+\input{PHOS/calib_rec}
+\input{FIT/calib_rec}
+\input{TOF/DataReduction}
+\input{TOF/TOFElectronicsStatus}
+\input{MUON/FLP_calib_rec}
+\input{HMPID/FLP_calib_rec}
+%-------------------------------------------------------
+\section{Calibration, reconstruction and data reduction on EPN's}
+\TBD{This section describes for each detector 
+\begin{itemize}
+\item Feasibility of final online reconstruction 
+\item What is done on the EPN's, description of algorithms (if any)
+\item Estimates on the processing rate
+\item Estimates on the data rate to permanent storage
+\end{itemize}
+}
+
+\input{ITS/reco_epn}
+\input{TPC/reco_epn}
+\input{TOF/TOFStatus}
+\input{TOF/TOFTimeCalibration}
+\input{MUON/EPN_calib_rec}
+\input{HMPID/EPN_calib_rec}
+\input{EMCAL/EMCalReconstruction}
+\input{EMCAL/EMCalCalibration}
+
+\section{Event building}
+\TBD{
+This section describes the output from online reconstruction
+\begin{itemize}
+\item Reconstruction output: extracting events from time-frames
+\item Cluster data storage: storing in \TF's vs storing separated to
+  events (may lead to optimal compression due to "sparsifying" of data)
+\end{itemize}
+}
+
+\input{general/EventBuilding}
+
+%% If you have citations uncomment the following
+\bibliographystyle{ieee}
+
+\bibliography{citations}
+
+\end{document}
+
+% vim: sw=2 sts=2 ai et tw=0

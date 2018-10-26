@@ -1,0 +1,64 @@
+\subsection{MUON}
+\label{MUON:EPN}
+
+%-----------------------------------------------------------------------------
+At the EPN level, we will perform the clustering (if not done at FLP
+level), the tracking (of both MCH and MID), the MID-MCH matching and,
+optionally, the computation of preliminary steps for the alignment
+(typically computation of derivatives).
+
+The biggest time consuming part of the current MCH tracking is the
+access to the magnetic field values during extrapolations. We plan to
+attack the problem by a) decreasing the number of times we access the
+magnetic field values and b) decreasing the time spent during each
+access. No speedup estimate is currently available though. The MID-MCH
+matching should be of little influence as far as computing time is
+concerned.
+
+The strategy to reduce the EPN output data volume is multifold.
+
+First, if we assume we have/need a MID trigger-like decision (done in
+FLP), then we can reject roughly half the events (those which do not
+have any MID tracklet). This corresponds to the situation of Run1 with
+the AllPt (0.5 GeV/c) MTR \pt threshold.
+
+Then we can increase the rejection factor by increasing the \pt
+threshold (e.g. in Run1 we used a threshold of 1 GeV/c for \pbpb, in
+which case we reduce by 6 the number of events to be written), at the
+expense of the physics cases we'll be able to cover if we increase the
+threshold too much.
+
+Lastly, there's a very agressive option in which we trust the
+clustering enough to drop completely the original pad information and
+keep only the cluster data (identifier, local position, resolution in
+x and y, which would amount to about 160 bits per cluster). This is of
+course a very dangerous option as there's no way back (still we could
+redo the tracking offline)... Assuming a mean number of pads (~3000
+from Run1 data\footnote{3000 pads after removing the bad pads, so that the good pad information alone is below the 1.5 GB/s of the raw data...}) 
+and a mean number of clusters per MB event (~400,
+again from Run1 data), we'd achieve a further reduction of a factor 3
+(3000 pads x 64 bits versus 400 clusters x 160 bits) of the cluster
+data.
+
+The track data size should be small, as we expect few tracks per event : $\sim$ 2 tracks/MB event in Run1 \pbpb leading to 9 MB/s assuming 1500 bits for one track data including references to clusters.
+
+Table \ref{tab:data reduction values} summarizes the reduction factors using different strategies. Notice however that some reduction strategies come at a price, which we don't  necessarily know yet. For instance, let's take the "Keeping complete tracks and all clusters" strategy as the baseline, which seems to offer a very reasonable trade-off between flexibility (we can still redo the tracking at a later stage if need be) and data reduction. If the pad information is dropped, then we trivially know that clustering cannot be redone, but we still have to investigate how to deal with embedding at the cluster level, which is an important tool to assess multiplicity effects on efficiencies. For instance, could we go back, in some way, from a cluster to its pads (using the Mathieson charge distribution, under the assumption that the clustering is somehow "reversible" - to be carefully validated, of course-) ? Or should we simply plan to store the full information, including pads, for a fraction of events ? Or should we plan to embed the embedding into the online reconstruction itself ? After all, the simulation and reconstruction of one single MC particle, being a single muon or a resonance, might not increase the CPU budget by a big factor, depending on the progress on the simulation front (CWG8). But that would mean loosing a lot of flexibility : we would for instance need to decide a priori which particles (\jpsi, $\upsilon$, etc...) to embed, so the implications need to be carefully investigated...
+
+On the other hand, depending on the exact storage bandwidth budget allocated to the Muon Spectrometer, we might be able to retain all the information (pads, clusters and tracks) by choosing an adequate event rejection (e.g. accepting only 1/6th of the events, achieved with a 1 GeV/c $p_{\rm{T}}$ threshold, would lead to 700 MB/s to storage).
+
+\begin{table}
+\centering
+\begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+Data reduction method & output of FLPs (MB/s) & output of EPNs (MB/s) w/o event rejection & total reduction factor (w/ event rejection) \\
+\hline
+\hline
+None & 1200 &  2100 & 1.14 - 3.4  \\
+\hline
+Keeping complete tracks and their associated clusters only & 1200 & 26 & 90 - 270 \\
+\hline
+Keeping complete tracks and all clusters &  1200 & 400 & 6 -  18 \\
+\hline
+\end{tabular}
+\caption{\label{tab:data reduction values}Summary of data reduction strategies. The raw data rate (input to FLPs) is assumed to be 1500 MB/s for 50 kHz MB. The event rejection factors are assumed to range from 2 to 6, depending on the $p_{\rm{T}}$ threshold chosen.}
+\end{table}

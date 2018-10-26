@@ -1,0 +1,30 @@
+\subsection{PHOS}
+\label{PHOS:datarate}
+
+During Run-3, PHOS will take triggered data, like in Run-1 and
+Run-2. Raw data format and event size will not change in Run-3, it
+will be digitized 10-bit amplitudes sampled at a rate 10~MHz by the
+ALTRO chip. Each amplitude is measured by two ADC channels, delivered
+from two preamplifiers with high and low gains. The number of samples
+is configurable. A reduction of the number of samples without
+degradation of the amplitude and timing accuracy is planned for
+Run-3. Redundancy of the amplitude measurement by two channels with
+high and low gain can also be eliminated. Thus, that the average event
+size in Run-3 will reduce by a factor of $2-3$ compared with
+Run-1. Table~\ref{tab:PHOS:eventSize} summarizes event size in PHOS
+per one DDL link and for the whole detector in pp, p-Pb and Pb-Pb
+runs.
+%
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|c|c|c|c|}\hline
+    System              & pp     & p-Pb   & Pb-Pb \\ \hline
+    Event size per DDL  & 0.5~kB & 0.8~kB & 1.4~kB \\
+    Event size per PHOS & 14 kB  & 20 kB  & 40 kB \\ \hline
+  \end{tabular}
+  \caption{Estimated event size from the PHOS detector}
+  \label{tab:PHOS:eventSize}
+\end{table}
+%
+Given collision rate in Pb-Pb runs of 50~kHz, one expects to have a
+data taking rate from PHOS to be 2~GB/s.

@@ -1,0 +1,95 @@
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{longtable}
+
+\pagestyle{fancy}
+\setlength{\headheight}{39pt}
+\lhead{\includegraphics[width=9mm]{XS_Black_Logo}}
+\rhead{O$^2$ Report: Computing Working Group \@alicecwg\\\leftmark}
+
+\def\@alicecwgversion{1}
+\newcommand\alicecwg[1]{\def\@alicecwg{#1}}
+\newcommand\version[1]{\def\@alicecwgversion{#1}}
+\newcommand\institutes[1]{\def\@institutes{#1}}
+\renewcommand\maketitle{\par
+\begingroup
+  \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+  \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+  \long\def\@makefntext##1{\parindent 1em\noindent
+    \hb@xt@1.8em{%
+     \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+  \global\@topnum\z@   % Prevents figures from going at top of page.
+  \null
+  \begin{center}
+    \let \footnote \thanks
+    \includegraphics[height=27mm]{Four_Colors_Logo}\hspace{2em}%
+    \includegraphics[height=27mm]{O2-logo}\par%
+    \vskip 1em
+    {\large
+	    O$^2$ Report \par
+	    Computing Working Groups 6,7 \par
+            \it Calibration, Reconstruction \par
+% \@alicecwg \par
+%	    \it
+%	    \ifcase\@alicecwg\relax
+%	    \or Architecture, Framework \& Distrib. Comput.\par
+%	    \or Tools, Guidelines, Procedures\par
+%	    \or Dataflow \& Condition Data\par
+%	    \or Data Model\par
+%	    \or Computing Platforms\par
+%	    \or Calibration\par
+%	    \or Reconstruction\par
+%	    \or Physics Simulation\par
+%	    \or QA, DQM, Visulatization\par
+%	    \or Control, Config. \& Monitoring\par
+%	    \or Software Lifecycle\par
+%	    \or Computing Hardware\par
+%	    \or Analysis\par
+%	    \else
+%	    \fi
+    }%
+    \vskip 1em
+    {\LARGE \@title \par}%
+    \vskip 0.5em
+    {Version \@alicecwgversion}%
+    \vskip 1.5em
+    {\large
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    {\small \it \@institutes \par}%
+    \vskip 1em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1.5em
+  \thispagestyle{plain}\@thanks
+\endgroup
+\setcounter{footnote}{0}%
+\global\let\thanks\relax
+\global\let\maketitle\relax
+\global\let\@thanks\@empty
+\global\let\@author\@empty
+\global\let\@date\@empty
+\global\let\@title\@empty
+\global\let\title\relax
+\global\let\author\relax
+\global\let\date\relax
+\global\let\and\relax
+}
+
+\newenvironment{changelog}{
+\section*{Changelog}
+\newlength\colwidth
+\setlength\colwidth{\textwidth}
+\addtolength\colwidth{-11em}
+\begin{longtable}{|l|l|p{\colwidth}|}
+	\hline
+}{
+\end{longtable}
+}
+\newcommand\change[3]{
+	#1 & #2 & #3 \\
+	\hline
+}

@@ -1,0 +1,32 @@
+\subsection{MUON}
+\label{MUON:datarate}
+
+Data rate estimates for MUON are based on past observations from 
+Run1 \pbpb runs. Even though we expect an increase in particle 
+multiplicities (by $\sim$ 25\%), we know that the Muon Tracker (MCH) 
+data size is to a large extent dominated by FEE noise, and 
+that Muon Trigger (MTR currently that will become the MID, 
+Muon Identifier) data size is a constant.  
+As we expect that the new Muon Tracker FEE will solve the 
+stability problems, we then assume that Run1 data 
+sizes are a very reasonable estimate of Run3 data sizes. 
+The Run1 data was heavily biased towards central events 
+due to the trigger used, so the average event size was 
+biased towards high values (60 kB/event for MCH). A more 
+detailed analysis reveals that MB events are around 
+25 kB/event and central ones around 75 kB/event. 
+MID events are expected to be 3 kB/event (compared to the 
+current 7 kB/event). So all in all the expected Muon data 
+rate is $\sim$ 1.5 GB/s for 50~kHz MB.
+
+Note that the upgrade of the MCH readout itself is actually 
+designed to handle a much higher data rate\cite{Run3OnlineTDR}, 
+as it must accept peak rates. Those have been estimated 
+to 100 GB/s at 50~kHz, assuming peak occupancies of 9\% and a 
+readout mode where all the ADC samples (10 of them per pad) are 
+readout, for a total of 140 bits per pad. That mode of operation is to 
+be considered a debug mode and will not be used in a sustained way. 
+The normal, routine, readout mode will have only one charge and address 
+per channel which amount to 90 bits per channel (per the SAMPA specification). 
+We assume at this stage that it will be possible to reduce this (in the CRU, for instance) 
+to 64 bits per channel.

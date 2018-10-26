@@ -1,0 +1,47 @@
+\subsection{ITS}
+\label{ITS:datarate}
+
+Table~\ref{tab:ITSrate} summarizes the hit rate in the ITS expected in continuous readout with
+30\ums frames at 50kHz \pbpb collisions, including the contribution from the QED electrons and 
+random noise at the rate of $10^{-5}$ per pixel in $2.5\times 10^{10}$ channels. 
+Minimum bias collision multiplicity is assumed to be 1/3 of that in
+the central collision
+
+\begin{table}[ht]
+\begin{tabular}{ | p{0.8cm} | p{1.6cm} | p{1.6cm} | p{1.8cm} | p{2cm} | p{3cm} | }
+%\begin{tabular}{ | l | l | l | l | l | l | }
+\hline
+   & \multicolumn{3}{|c|}{Single central \pbpb collision} & QED 30 \ums @ 50kHz & Min.bias \pbpb 30 \ums @ 50kHz \\ \hline
+Lr & Min per sensor & Max per sensor & Mean per layer & Mean per layer      & Mean per layer        \\ \hline
+0  & 31             & 137            & 9948           & 8400                & 13400                 \\ \hline
+1  & 30             & 92             & 9468           & 5400                & 10100                 \\ \hline
+2  & 26             & 67             & 8978           & 3400                &  7900                 \\ \hline
+3  & 1.7            & 4.7            & 8732           & 120                 &  4500                 \\ \hline
+4  & 1.4            & 3.0            & 7717           & 72                  &  3900                 \\ \hline
+5  & 0.62           & 1.55           & 9336           & 52                  &  4700                 \\ \hline
+6  & 0.55           & 1.22           & 8819           & 44                  &  4500                 \\ \hline
+\multicolumn{5}{|c|}{Total hit clusters per 30 \ums frame}                  & 49000                 \\ \hline
+\multicolumn{5}{|c|}{Noisy pixels in 2.5$\times 10^{10}$ channels}          & 250000                \\ \hline
+\hline
+\end{tabular}
+\caption{Hit rates from hadronic collisions and QED electrons. Random noise rate assumed to be $10^{-5}$ per pixel per 30\ums 
+readout frame.}
+\label{tab:ITSrate}
+\end{table}
+
+As one can see, the data rate is dominated by the noise, which
+produces only single-pixel clusters. According to simulations,
+the single-pixel cluster probability from real hits is $\sim 1.2\%$, 
+and $\sim 70\%$ of such pixels are in fact split from larger
+clusters produced by the same particle. Therefore, one can consider
+discarding single-pixel clusters either in the FE or during the
+clusterization on the FLPs. But, given that the detector design is not
+final yet, the fraction of real single-pixel clusters may 
+increase (particularly, for larger pixel pitch). For the conservative estimate of ITS data rate on the 
+input to the online system we assume that the single-pixel clusters (if
+not suppressed) will be packed using 20 bits per cluster while
+remaining hits will consume in average 40 bits per clusters (by
+storing the row, column and 4$\times$4 pixels plaquette (partially)
+containing the cluster. This leads to $\sim$ 30 (8.2) GB/s at 50~kHz and
+$\sim$ 38 (16.4) GB/s at 100~kHz without (with) suppression of the single-pixel
+clusters.

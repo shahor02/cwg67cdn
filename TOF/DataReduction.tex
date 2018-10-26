@@ -1,0 +1,26 @@
+\subsection{TOF Data Reduction}
+\label{sec:TOFDataReduction}
+Even if the average payload per event of the TOF raw data format is quite limited it is not
+completely optimized. This is due in particular to some intrinsic limitations of the existing hardware
+of the TDC readout modules (TRM) which have on board legacy FPGAs (Actel ProAsicPlus\circledR APA750). 
+With a much larger amount of data read-out a further optimization is obviously desirable.
+However these cards will not be replaced as part of the upgrade program and an optimization with the current FPGAs
+resulted impossibile.
+
+The data format is currently made by a structure of control words (6 words for each TRM) encapsulating the hit
+information (two words for each hit registered by the detector), providing addressing for hit encapsulated - if any - 
+and validating the readout, including CRC controls on data potentially exposed to Single Event Upsets in internal staging FIFOs). 
+This approach proved robust but due to the presence of these control words even an entirely ``empty'' event 
+(no hit registered at TOF) has - however - a 21 KB raw data size. The control words contain also certain slow control information 
+(such as temperatures of the cards and thresholds set on front-end cards) which can be stripped: the slow control part is already 
+actually read-out via a devoted optical link and saved separately.
+
+Several data reduction options are therefore possible inserting immediate processing at FLP level, with a greater
+impact foreseen in \pp collisions, where the event multiplicity is smaller.
+Different algorithms will be tested and their performance evaluated during RUN2 implementing them
+inside the HLT. With respect to the standard numbers (e.g. maintaining the current format) 
+we expect to achieve a 50\% data reduction in \pp and less in \pbpb (with data reduction performance
+decreasing for the most central events where the pure 'hit payload' is however dominant). In Table~\ref{tab:InputRate} we tentatively
+indicated a 20\% gain in \pbpb and we assumed an average 2000 hits multipicity at TOF in minimum bias. It must be taken into
+account, finally, that the whole payload for TOF is also subject to some uncertainty in \pbpb depending on the actual bunch spacing scheme
+that will be adopted by the LHC for heavy ions collisions.

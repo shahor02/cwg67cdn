@@ -1,0 +1,21 @@
+If few collisions happen (and tagged by the FIT) within single
+integration cycle of the ITS (~30 \ums), the only handle
+to separate them and attach time-label is by relating the reco.vtx
+multiplicity to FIT multiplicity - works only for tracks unambigously
+attached to the vertex => problematic in pp (low multiplicity, $\sim$6 
+events @ 200kHz in 30\ums interval)
+
+Additional handles: if ITS track matched to TPC -> time can be
+extracted from TPC Z shift provided the nearest pile-up collisions are
+separated by n-sigma of TPC Zresolution at matching point 
+($\sim$1cm = $\sim$0.5\ums $\rightarrow$ $\sim$10\% unresolvable pile-up
+for pp @ 200kHz, $\sim$2.5\% for PbPb @ 50kHz)
+
+Remaining problem is standalone ITS tracks.
+a) if can be attached unambiguously to the vertex - no problem (?)
+b) if bound to V0 looking on the vertex - no problem (?)
+c) duplicate them in all events they may belong to (putting the burden
+of their attachment to analysis task (?)
+
+Alternative: do not store separated events but list of primary
+vertices, tracks, V0's etc. with "suggested" attachment of ones to another.

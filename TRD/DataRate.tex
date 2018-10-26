@@ -1,0 +1,44 @@
+\subsection{TRD}
+\label{TRD:datarate}
+
+For Run-3 the TRD will have to be adapted to the higher interaction
+rates by modifying the FEE and readout system.  The chosen strategy is
+based on using the existing FEE in a different mode of operation which
+limits the amount of event data to be read.  The currently employed
+mode of reading full zero-suppressed ADC data results in readout times
+of several 10~$\mu$s, which will be too long for Run-3 conditions.
+Therefore the following alternatives are foreseen:
+\begin{itemize}
+\item {\bf Tracklet Readout} In this mode only the information on the
+  online tracklets is transferred, thus avoiding the handshaking
+  overhead in the raw readout mode and allowing event readout times
+  between 4~-~8~$\mu$s.
+\item {\bf Partial Data Readout} The readout of the full raw ADC data
+  would in this mode be limited to regions where TRD information is
+  relevant (i.e. where tracklets fulfilling simple criteria for
+  electron candidates).
+\item {\bf Mixed Mode} If necessary, e.g. for calibration purposes,
+  also a mixed mode can be foreseen.  This means that only for a very
+  small fraction of events (e.g. $10^{-3}$) the full zero-suppressed
+  raw ADC data is transferred, while the rest of the events is read in
+  one of the two reduced readout modes (tracklet readout or partial
+  data readout).
+\end{itemize}
+%
+The expected data rates are summarized for the first two options in
+Tab.~\ref{tab:TRD:eventSize}.  For the mixed mode option no
+significant change of the data rate is to be expected, if the fraction
+of events with full readout is kept at a small enough level.
+%
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|c|c|c|}\hline
+    Readout mode         & Interaction rate (kHz) & Data volume (Gbit/s/sector) \\ \hline
+    Tracklet readout     & 50                     & 4.73 - 8.78    \\
+                         & 100                    & 7.68 - 13.65   \\ \hline
+    Partial Data Readout & 50                     & 7.8            \\ \hline
+  \end{tabular}
+  \caption{Estimated data rate for Pb-Pb collisions for the TRD
+    detector.}
+  \label{tab:TRD:eventSize}
+\end{table}

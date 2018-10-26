@@ -1,0 +1,70 @@
+\subsection{MUON}
+\label{MUON:FLP}
+
+%-----------------------------------------------------------------------------
+\subsubsection{CRU}
+
+Depending on the CRU FPGA available space and the availability of
+competent (wo)manpower, we may think of reorganizing the MCH data in
+ways that could help the pre-clustering stage performed in FLPs, or
+even to do a pre-clustering on the CRU. As it's unclear whether all
+this is doable at all, we will in this document assume nothing special
+is done in the CRU.
+
+\subsubsection{FLP}
+
+On the FLP the very minimal set of operations that are foreseen
+includes occupancy (MCH) and noisy channel (MID) maps computation.
+
+Very likely, we should also be able to perform pre-clustering on the
+FLPs. The pre-clustering is a simple clustering algorithm which groups
+adjacent pads, irrespective of their charges, into preclusters. The
+current (recursive) implementation used in AliRoot 5 accounts for
+roughly 20\% of the total clustering time. Very initial investigations
+about possible optimizations of the way we access/store pad
+information (e.g. using more static data structures with respect to
+the current ones) have shown that we can most certainly gain a factor
+20 in speed for the pre-clustering stage, getting to about 2 ms per MB
+\pbpb event on one core of an Intel i7 @ 2.3 GHz processor (excluding
+I/O). Further speedup would require moving part of the pre-clustering
+into accelerator cards, e.g. FPGAs (hosted by the CRU or the FLPs
+themselves, whatever the case may be). Manpower to investigate this
+option is being searched for.
+
+Whether or not the next processing stage, namely the clustering, can
+fit within the FLPs, is an opened question. We first have to assume
+that the MCH FLPs will see complete detection elements (either slats
+or quadrants), otherwise we don't have the relevant information for
+clustering. Then, if we assume also that they'll be equipped with GPUs
+(or other "accelerator" like Xeon Phi) then the plan is to convert the
+clustering stage to a GPU version, where we can only guess to be able
+to gain a factor 50 in speed. Admittedly, without even an early
+prototype of that version, the speedup factor is more a wish than a
+real estimate... But even without a GPU version we expect to be able
+to improve the current CPU implementation, e.g. using the same static
+data structures as in the pre-clustering. Whether or not such an
+implementation would fit in a FLP remains to be demonstrated.
+
+For MID, it is still unclear whether or not anything will have to be
+developed at the FLP level. In the case we are able to reconstruct at
+the EPN level all the MCH tracks (see next section) then nothing is
+really needed for MID at FLP level. On the contrary, if we need an a
+priori selection of the events to be fully reconstructed by MCH (in
+the case the full reconstruction is found to be too slow to cope with
+50 kHz event rate), then we will need to get the computation of a
+trigger-like decision somewhere in the chain. We know we will get
+exactly one FLP for MID, so that FLP will see all the MID data at
+once, and hence can compute a trigger-like decision. Given the current
+uncertainty of the achievable speed of the full MCH reconstruction, we
+do plan to investigate, during Run2 already (within the HLT farm), an
+implementation of the trigger decision, that could be used to select
+which events should be fully reconstructed.
+
+The data reduction that can be achieved at FLP level is currently
+largely unknown. Lossless compression (using e.g. Huffman coding) of
+the pad data has not been investigated yet. In the worst case, we will
+in fact slightly increase (by $\sim$ 3\%) the data volume (after pad cleaning), as we'll be
+adding some data to mark the pre-clusters : we would for instance
+re-order the digits by pre-cluster and thus need some boundary words (assuming 16 bits would be enough)
+to separate the digits from different pre-clusters. This may tell us that the clustering
+should not be done at the FLP level, even if fast enough, but on EPNs.

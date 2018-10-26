@@ -1,0 +1,14 @@
+\subsection{HMPID calibration and reconstruction}
+\label{HMPID:FLP}
+
+The ALICE-HMPID is devoted to the identification of charged hadrons. It consists of seven identical RICH counters,
+with liquid C$_{6}$F$_{14}$ as Cherenkov radiator (n = 1.299 for $\lambda_{ph}$ = 175 nm). Photons and charged particles detection is performed by a MWPC, coupled with a pads 
+segmented CsI coated photo-cathode. HMPID provides 3 sigmas separation for pions and kaons up to $p_T$ = 3 GeV/c and for protons up to $p_T$ = 5 GeV/c. PID is performed 
+by means of photon emission angle measurement. Photon emission angle reconstruction can be divided in two steps. In the first step from raw data the coordinates and 
+the charge values of the fired pads have to be retrieved, from these informations the clusterization algorithm can create clusters. 
+The second step requires the tracks to be extrapolated from the central tracking devices of ALICE (ITS, TPC) and associated with the corresponding cluster of the minimum
+ionizing particle in the HMPID cathode plane. Starting from the cluster centroid one has to reconstruct the angle under which the photon causing it could have been emitted if belonging to the given track.
+
+It can been foreseen that for the online-reconstruction procedure, HMPID clusterization can be executed at FLP level. No calibration is needed at this step, the pedestal subtraction will be executed directly by the RO electronics. The pedestal values will be calculated 
+in the CALIBRATION runs using using dedicated script with a procedure quite similar to that already used in RUN1. 
+ 

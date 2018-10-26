@@ -1,0 +1,16 @@
+\subsection{TOF Detector Status}
+\label{sec:TOFDetectorStatus}
+At the level of EPNs, TOF collects the information coming from previous calibration runs (NOISE, running before
+PHYSICS, the information of which is expected to be available to all EPNs in some way during the subsequent
+PHYSICS runs), detector configuration (high/low voltage status, electronics and trigger configuration) from the
+equivalent of the Run1 Detector Control System. The aim is to further reduce the data size discarding 
+unwanted hits coming from the channels that were either OFF (no LV and/or HV) or flagged as noisy. 
+
+This information (noise and detector configuration) will have to be exported once per run somehow to the 
+OCDB-equivalent structure to be available for Monte Carlo simulation. A Run1 preprocessor-like process will be needed to 
+prepare the object from DCS and NOISE runs (i.e. not necessarily running on EPNs during data taking). The 
+estimated size per run is $~160$ kB.
+%1 byte per channel
+
+The estimated CPU time for the process is to be tested in the same framework as the data reduction described
+in~\ref{sec:TOFDataReduction}.

@@ -1,0 +1,14 @@
+\subsection{TOF Temp}
+\label{sec:TOFTemp}
+During PHYSICS runs, the TOF data will be checked to spot inconsistent data format, unexpected missing information, 
+and errors flags raised by the electronics during the standard data decoding. This will allow to discard suspicious or not 
+fully efficient parts of the detector's readout from data reconstruction. 
+
+The information is going to be embedded as an auxiliary data to be sent to the EPNs
+at the same rate as the data flow, namely $\sim 20 Kbyte$ per time frame. It will signal which electronics channels were
+actually enabled and properly functioning regardless the data reduction process\ref{sec:TOFDataReduction} will remove 
+the header and control words of the parts of the detectors not containing any hit. 
+
+The processing time per event will be estimate using the already existing software implemented as DAQ DA and used 
+during Run1.
+
